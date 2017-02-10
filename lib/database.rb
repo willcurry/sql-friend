@@ -12,14 +12,19 @@ class Database
 
   def query(query)
     result = @connection.exec_params(query)
-    data = []
-    result.each do |row|
-      data << row
-    end
-    return data
+    return format(result)
   end
 
   def close_connection
     @connection.finish
+  end
+
+  private
+
+  def format(result)
+    data = []
+    result.each do |row|
+      data << row
+    end
   end
 end
