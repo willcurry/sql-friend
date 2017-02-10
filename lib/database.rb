@@ -1,8 +1,12 @@
 require 'pg'
 
 class Database
+  def initialize(database_name)
+    @database_name = database_name
+  end
+
   def connect
-    @connection = PG::Connection.open(:dbname => 'willcurry')
+    @connection = PG::Connection.open(:dbname => @database_name)
     if @connection
       return "Connected"
     else

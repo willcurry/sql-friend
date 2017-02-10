@@ -1,17 +1,21 @@
 require 'database'
 
 RSpec.describe Database do
+  before(:each) do
+    @database = Database.new('willcurry')
+  end
+
+  after(:each) do
+    @database.close_connection
+  end
+
   it "connects successfully" do
-    database = Database.new
-    expect(database.connect).to eq("Connected")
-    database.close_connection
+    expect(@database.connect).to eq("Connected")
   end
 
   it "gets correct results from database" do
-    database = Database.new
-    database.connect
-    result = database.query('SELECT * FROM test;')
+    @database.connect
+    result = @database.query('SELECT * FROM test;')
     expect(result.first["name"]).to eq("Will")
-    database.close_connection
   end
 end
